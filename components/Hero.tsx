@@ -39,7 +39,7 @@ function Portrait({ photo }: { photo: string | null }) {
     <img
       src={photo}
       alt={`${profile.name}, ${profile.role}`}
-      className="h-full w-full scale-[1.02] object-cover grayscale transition-all duration-[900ms] ease-out hover:scale-100 hover:grayscale-0"
+      className="h-full w-full object-cover transition-transform duration-[900ms] ease-out hover:scale-[1.04]"
     />
   );
 }
@@ -153,7 +153,7 @@ export default function Hero({ photo }: { photo: string | null }) {
 
           <div style={delay(0.52)} className="rise lg:col-span-5">
             <Parallax distance={18}>
-              <div className="aspect-[4/5] w-full max-w-[15.5rem] overflow-hidden lg:ml-auto">
+              <div className="aspect-[4/5] w-full max-w-[19rem] overflow-hidden lg:ml-auto">
                 <Portrait photo={photo} />
               </div>
             </Parallax>
