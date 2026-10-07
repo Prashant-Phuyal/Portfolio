@@ -177,7 +177,7 @@ export default function AskSite() {
                   (stage, position) => (
                     <span
                       key={stage}
-                      className={`flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors duration-300 ${
+                      className={`flex items-center gap-2 text-[0.78rem] transition-colors duration-300 ${
                         running ? "text-faint" : "text-fg"
                       }`}
                     >
@@ -245,7 +245,7 @@ export default function AskSite() {
 
                 {!running && result && !result.refused && (
                   <div className="space-y-4">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-faint">
+                    <p className="text-[0.8rem] text-muted">
                       Top {result.hits.length} for “{asked}”
                     </p>
 

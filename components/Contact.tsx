@@ -51,7 +51,7 @@ export default function Contact() {
             <p className="mt-6 max-w-xl text-[0.98rem] leading-[1.6] text-muted">
               Open to AI engineering roles, and happy to talk about retrieval,
               grounding, or getting a model to work in a language it{" "}
-              <span className="font-serif italic text-fg">
+              <span className="italic text-fg">
                 wasn&apos;t really built for
               </span>
               .

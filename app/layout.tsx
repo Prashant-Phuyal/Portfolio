@@ -1,36 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Bricolage_Grotesque,
-  Instrument_Serif,
-  JetBrains_Mono,
-} from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { profile } from "../data/content";
 import "./globals.css";
 
 /*
-  Bricolage Grotesque. Inter Tight was correct but anonymous — at 15rem a
-  neutral grotesk is just Helvetica, and the name is the whole hero. This one
-  has flared stems, a slab-ish leg on the R and an irregular rhythm that only
-  becomes visible at display size, which is exactly where it is used.
+  One typeface for everything readable.
+
+  This replaced a three-font setup — a quirky display face, a serif used for
+  italics, and a mono used for every small label. Three voices at once, with
+  the mono set in tracked uppercase across thirty-odd places, is what made the
+  page read as generated rather than designed. Inter is ordinary on purpose:
+  it is what a professional site actually uses, and it gets out of the way.
 */
-const display = Bricolage_Grotesque({
+const sans = Inter({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-display",
-  axes: ["opsz", "wdth"],
+  variable: "--font-sans",
 });
 
-/* Used only in italic, for the occasional editorial emphasis. */
-const serif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-serif",
-  adjustFontFallback: false,
-  fallback: ["Georgia", "serif"],
-});
-
+/* Kept only for the retrieval demo, where figures and timings genuinely want
+   fixed-width digits. Not used for UI labels any more. */
 const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -130,7 +119,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${display.variable} ${serif.variable} ${mono.variable}`}
+      className={`${sans.variable} ${mono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

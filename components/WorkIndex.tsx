@@ -63,7 +63,7 @@ function Row({ project, index }: { project: Project; index: number }) {
             <div className="lg:col-span-1" />
 
             <div className="lg:col-span-6">
-              <p className="font-serif text-[1.3rem] italic leading-snug lg:text-[1.55rem]">
+              <p className="text-[1.15rem] italic leading-snug text-muted lg:text-[1.3rem]">
                 {project.pull}
               </p>
               <div className="mt-5 space-y-3.5">

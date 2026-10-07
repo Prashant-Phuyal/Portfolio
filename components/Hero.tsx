@@ -101,7 +101,7 @@ export default function Hero({ photo }: { photo: string | null }) {
           <div style={delay(0.42)} className="rise lg:col-span-7">
             <p className="max-w-xl font-display text-[1.15rem] leading-[1.32] tracking-[-0.02em] sm:text-[1.4rem] lg:text-[1.65rem]">
               I build the parts of a product that have to{" "}
-              <span className="font-serif italic">understand something</span> —
+              <span className="italic">understand something</span> —
               chatbots that answer from a company&apos;s own documents, and the
               generative AI behind them.
             </p>

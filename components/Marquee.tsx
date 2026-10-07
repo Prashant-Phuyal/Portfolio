@@ -61,7 +61,7 @@ export default function Marquee() {
             {row.map((item, index) => (
               <span
                 key={`${item}-${index}`}
-                className="flex shrink-0 items-center gap-10 font-mono text-[12px] uppercase tracking-[0.12em] text-faint"
+                className="flex shrink-0 items-center gap-10 text-[0.82rem] text-muted"
               >
                 {item}
                 <span aria-hidden className="h-[3px] w-[3px] bg-line" />
