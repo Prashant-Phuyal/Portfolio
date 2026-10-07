@@ -1,7 +1,12 @@
 "use client";
 
 import { ArrowUpRight, Phone } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "./BrandIcons";
+import {
+  FacebookIcon,
+  GithubIcon,
+  InstagramIcon,
+  LinkedinIcon,
+} from "./BrandIcons";
 import LocalTime from "./LocalTime";
 import Heading from "./Heading";
 import Magnetic from "./Magnetic";
@@ -21,6 +26,18 @@ const channels = [
     value: "Prashant-Phuyal",
     href: profile.github,
     icon: GithubIcon,
+  },
+  {
+    label: "Instagram",
+    value: "prashant_phuyal10",
+    href: profile.instagram,
+    icon: InstagramIcon,
+  },
+  {
+    label: "Facebook",
+    value: "prashant.phuyal.948",
+    href: profile.facebook,
+    icon: FacebookIcon,
   },
   { label: "Curriculum vitae", value: "PDF, 2 pages", href: profile.cv },
   /* Listed after email and the profiles, which stay the primary route. */

@@ -10,7 +10,12 @@ import {
   Search,
   Sun,
 } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "./BrandIcons";
+import {
+  FacebookIcon,
+  GithubIcon,
+  InstagramIcon,
+  LinkedinIcon,
+} from "./BrandIcons";
 import { nav, profile } from "../data/content";
 
 /**
@@ -118,6 +123,26 @@ export default function CommandPalette() {
         keywords: "profile professional",
         run: () => {
           window.open(profile.linkedin, "_blank", "noreferrer");
+          close();
+        },
+      },
+      {
+        id: "instagram",
+        label: "Open Instagram",
+        icon: InstagramIcon,
+        keywords: "social photos",
+        run: () => {
+          window.open(profile.instagram, "_blank", "noreferrer");
+          close();
+        },
+      },
+      {
+        id: "facebook",
+        label: "Open Facebook",
+        icon: FacebookIcon,
+        keywords: "social",
+        run: () => {
+          window.open(profile.facebook, "_blank", "noreferrer");
           close();
         },
       },

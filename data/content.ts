@@ -27,6 +27,8 @@ export const profile = {
   ],
   github: "https://github.com/Prashant-Phuyal",
   linkedin: "https://www.linkedin.com/in/prashant-phuyal-a27120215/",
+  facebook: "https://www.facebook.com/prashant.phuyal.948/",
+  instagram: "https://www.instagram.com/prashant_phuyal10/",
   siteUrl: "https://prashantphuyal.com.np",
   cv: "/ER_PRASHANT_CV.pdf",
   /**

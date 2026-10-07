@@ -1,7 +1,12 @@
 "use client";
 
 import { ArrowDown } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "./BrandIcons";
+import {
+  FacebookIcon,
+  GithubIcon,
+  InstagramIcon,
+  LinkedinIcon,
+} from "./BrandIcons";
 import LocalTime from "./LocalTime";
 import Magnetic from "./Magnetic";
 import Marquee from "./Marquee";
@@ -125,6 +130,12 @@ export default function Hero({ photo }: { photo: string | null }) {
                 { label: "Email", href: `mailto:${profile.email}` },
                 { label: "GitHub", href: profile.github, icon: GithubIcon },
                 { label: "LinkedIn", href: profile.linkedin, icon: LinkedinIcon },
+                {
+                  label: "Instagram",
+                  href: profile.instagram,
+                  icon: InstagramIcon,
+                },
+                { label: "Facebook", href: profile.facebook, icon: FacebookIcon },
               ].map(({ label, href, icon: Icon }) => (
                 <a
                   key={label}
