@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+.env*.local
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+.DS_Store
+.env
+
+
+# Personal reference — kept local, not published with the repo
+PROJECTS.md

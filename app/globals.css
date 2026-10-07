@@ -1,0 +1,453 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Editorial / typographic, after the house style of the portfolios collected on
+  siteinspire: type at display size as the main visual element, near-monochrome,
+  hairline rules instead of drop shadows, work presented as a numbered index
+  rather than a grid of cards.
+
+  What this deliberately avoids: card shadows, rounded pills, a saturated brand
+  colour, and anything that reads as a SaaS marketing page.
+*/
+
+:root,
+:root[data-theme="light"] {
+  --bg: #f1efea;
+  --fg: #11110f;
+  --muted: #55534d;
+  --faint: #8c8982;
+  --line: #d3cfc6;
+  --accent: #2a2ae8;
+  --inverse: #f1efea;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0c0c0b;
+  --fg: #eceae4;
+  --muted: #9b988f;
+  --faint: #6b6860;
+  --line: #262521;
+  --accent: #7b7bff;
+  --inverse: #0c0c0b;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-display), "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 400ms ease, color 400ms ease;
+  }
+
+  ::selection {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 500;
+    /* Display type is set tight — the tracking is doing a lot of the work. */
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+  }
+}
+
+@layer components {
+  .shell {
+    max-width: 92rem;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding: 0 2.5rem;
+    }
+  }
+
+  /* Small uppercase mono label — the only "UI" voice on the page. */
+  .label {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* Section heading at display scale. */
+  .display {
+    font-size: clamp(2rem, 4.6vw, 3.6rem);
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    font-weight: 500;
+  }
+
+  .rule {
+    height: 1px;
+    background: var(--line);
+    width: 100%;
+  }
+
+  /* Link with a rule that wipes in from the left. */
+  .ul-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .ul-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .ul-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Squared-off tag. No pill, no fill. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--line);
+    padding: 0.25rem 0.6rem;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid var(--fg);
+    padding: 0.85rem 1.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-family: var(--font-mono), monospace;
+    position: relative;
+    overflow: hidden;
+    transition: color 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* Fill wipes up from the bottom on hover. */
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--fg);
+    transform: translateY(101%);
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: -1;
+  }
+  .btn:hover {
+    color: var(--inverse);
+  }
+  .btn:hover::before {
+    transform: translateY(0);
+  }
+
+  .btn-solid {
+    background: var(--fg);
+    color: var(--inverse);
+  }
+  .btn-solid::before {
+    background: var(--bg);
+  }
+  .btn-solid:hover {
+    color: var(--fg);
+  }
+}
+
+@layer utilities {
+  @keyframes riseIn {
+    from {
+      opacity: 0;
+      transform: translateY(2.2rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes lineUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .rise {
+    animation: riseIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* A line of display type that slides up out of its own clipping box. */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+  }
+  .line-mask > span {
+    display: block;
+    animation: lineUp 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /*
+    Scroll reveals, gated on `.js`, which the inline script in layout.tsx adds
+    before first paint. Without JavaScript nothing is hidden — the page is just
+    static. This rule exists because an earlier build hid sections behind a
+    script and rendered blank when that script was slow.
+  */
+  .js .reveal,
+  .js .reveal-group > .reveal-child {
+    opacity: 0;
+  }
+  .js .reveal.in {
+    animation: riseIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .js .reveal-group.in > .reveal-child {
+    animation: riseIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .js .reveal-group.in > .reveal-child:nth-child(1) { animation-delay: 0ms; }
+  .js .reveal-group.in > .reveal-child:nth-child(2) { animation-delay: 80ms; }
+  .js .reveal-group.in > .reveal-child:nth-child(3) { animation-delay: 160ms; }
+  .js .reveal-group.in > .reveal-child:nth-child(4) { animation-delay: 240ms; }
+  .js .reveal-group.in > .reveal-child:nth-child(5) { animation-delay: 320ms; }
+  .js .reveal-group.in > .reveal-child:nth-child(n + 6) { animation-delay: 400ms; }
+
+  /* Word-by-word heading reveal. Each word rides up out of its own clip box. */
+  .words > span {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  .words > span > span {
+    display: inline-block;
+    transform: translateY(105%);
+  }
+  .js .words.in > span > span {
+    animation: lineUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .words:not(.in) > span > span {
+    transform: translateY(105%);
+  }
+  html:not(.js) .words > span > span {
+    transform: none;
+  }
+
+  /* Index row: a fill that wipes up behind the row on hover. */
+  .row-wipe {
+    position: relative;
+    isolation: isolate;
+  }
+  .row-wipe::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--fg) 4%, transparent);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: -1;
+  }
+  .row-wipe:hover::before {
+    transform: scaleY(1);
+  }
+
+  /* Tag cluster that staggers in with its parent reveal. */
+  .js .reveal.in .stagger-tags > *,
+  .js .reveal-group.in .stagger-tags > * {
+    animation: riseIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .stagger-tags > *:nth-child(1) { animation-delay: 40ms; }
+  .stagger-tags > *:nth-child(2) { animation-delay: 80ms; }
+  .stagger-tags > *:nth-child(3) { animation-delay: 120ms; }
+  .stagger-tags > *:nth-child(4) { animation-delay: 160ms; }
+  .stagger-tags > *:nth-child(5) { animation-delay: 200ms; }
+  .stagger-tags > *:nth-child(6) { animation-delay: 240ms; }
+  .stagger-tags > *:nth-child(7) { animation-delay: 280ms; }
+  .stagger-tags > *:nth-child(8) { animation-delay: 320ms; }
+  .stagger-tags > *:nth-child(n + 9) { animation-delay: 360ms; }
+
+  /*
+    Signal-loss glitch on the name: two coloured copies tear away from the real
+    text in horizontal slices, then settle. It runs ONCE for ~2s and ends on a
+    keyframe where both copies are invisible, so the name is left perfectly
+    clean — no JavaScript decides when it stops.
+
+    The copies are CSS pseudo-elements, so the text in the DOM is never altered
+    and screen readers only ever see the real name.
+  */
+  .glitch {
+    position: relative;
+    display: inline-block;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    pointer-events: none;
+    overflow: hidden;
+    /*
+      Invisible by default. Combined with `animation-fill-mode: none` below,
+      the torn copies can only ever be visible *while* the animation is
+      running — when it ends the element falls back to this base style. That
+      is a stronger guarantee than relying on the final keyframe, which an
+      earlier version got wrong and left the name permanently glitched.
+    */
+    opacity: 0;
+  }
+
+  /*
+    Timing note, learned the hard way: do NOT use steps(1, end) here. With
+    steps(1,end) the last interval holds the *previous* keyframe's value, so the
+    animation finishes frozen mid-tear and the glitch never clears. The snap
+    between states comes from paired keyframes (0%,9% / 10%,19% / …) under
+    linear timing instead, which still jumps discretely but genuinely reaches
+    the final keyframe.
+  */
+  .glitch::before {
+    color: #ff3b5c;
+    animation: glitchA 2s linear 1 none;
+  }
+
+  .glitch::after {
+    color: #19d3e0;
+    animation: glitchB 2s linear 1 none;
+  }
+
+  @keyframes glitchA {
+    0%, 9%    { transform: translate(-0.05em, -0.018em); clip-path: inset(16% 0 60% 0); opacity: 1; }
+    10%, 19%  { transform: translate(0.045em, 0.016em);  clip-path: inset(70% 0 12% 0); opacity: 1; }
+    20%, 29%  { transform: translate(-0.07em, 0);        clip-path: inset(4% 0 82% 0); opacity: 1; }
+    30%, 39%  { transform: translate(0.028em, -0.02em);  clip-path: inset(46% 0 40% 0); opacity: 0.9; }
+    40%, 49%  { transform: translate(-0.035em, 0.01em);  clip-path: inset(84% 0 4% 0);  opacity: 0.75; }
+    50%, 59%  { transform: translate(0.018em, 0);        clip-path: inset(30% 0 64% 0); opacity: 0.55; }
+    60%, 69%  { transform: translate(-0.01em, 0);        clip-path: inset(62% 0 30% 0); opacity: 0.32; }
+    /* Clean from 72% on — roughly 1.45s — and it stays clean. */
+    72%, 100% { transform: none; clip-path: inset(50% 0 50% 0); opacity: 0; }
+  }
+
+  @keyframes glitchB {
+    0%, 9%    { transform: translate(0.05em, 0.018em);   clip-path: inset(64% 0 14% 0); opacity: 1; }
+    10%, 19%  { transform: translate(-0.045em, -0.016em);clip-path: inset(10% 0 74% 0); opacity: 1; }
+    20%, 29%  { transform: translate(0.07em, 0);         clip-path: inset(78% 0 6% 0);  opacity: 1; }
+    30%, 39%  { transform: translate(-0.028em, 0.02em);  clip-path: inset(26% 0 58% 0); opacity: 0.9; }
+    40%, 49%  { transform: translate(0.035em, -0.01em);  clip-path: inset(52% 0 38% 0); opacity: 0.75; }
+    50%, 59%  { transform: translate(-0.018em, 0);       clip-path: inset(6% 0 84% 0);  opacity: 0.55; }
+    60%, 69%  { transform: translate(0.01em, 0);         clip-path: inset(40% 0 50% 0); opacity: 0.32; }
+    72%, 100% { transform: none; clip-path: inset(50% 0 50% 0); opacity: 0; }
+  }
+
+  /* The real text flickers very slightly while the copies tear, then is left
+     fully opaque and unshifted for the rest of the page's life. */
+  .glitch > span {
+    animation: glitchFlicker 2s linear 1 none;
+  }
+
+  @keyframes glitchFlicker {
+    0%, 5%   { opacity: 0.88; transform: translateX(-0.004em); }
+    6%, 13%  { opacity: 1;    transform: translateX(0.004em); }
+    14%, 23% { opacity: 0.9;  transform: translateX(-0.003em); }
+    24%, 37% { opacity: 1;    transform: translateX(0.002em); }
+    38%, 49% { opacity: 0.94; transform: none; }
+    50%, 100%{ opacity: 1;    transform: none; }
+  }
+
+  /* Nothing tears for anyone who asked for less motion. */
+  @media (prefers-reduced-motion: reduce) {
+    .glitch::before,
+    .glitch::after {
+      display: none;
+    }
+    .glitch > span {
+      animation: none;
+    }
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /*
+    Film grain. Fixed, non-interactive and very low opacity — it reads as paper
+    texture rather than as an effect, and keeps large flat areas of the
+    near-monochrome palette from looking like dead pixels.
+  */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    pointer-events: none;
+    z-index: 70;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .hl {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    color: inherit;
+    padding: 0 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
