@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { profile } from "../data/content";
+import { education, experience, profile, skills } from "../data/content";
 import "./globals.css";
 
 /*
@@ -27,37 +27,82 @@ const mono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
+/* 64 characters — fits Google's ~600px title budget without truncation. */
+const TITLE = "Prashant Phuyal | AI Engineer in Nepal | RAG, Generative AI";
+
+/* 156 characters. States who, what, where and the specialisation, in a
+   sentence a human would actually read in a results page. */
+const DESCRIPTION =
+  "Er. Prashant Phuyal is an Associate AI Engineer in Kathmandu, Nepal, " +
+  "building RAG chatbots, LLM applications and Generative AI systems with " +
+  "FastAPI and Qdrant.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(profile.siteUrl),
-  title: `${profile.name} — ${profile.role}`,
-  description: profile.blurb,
+  title: {
+    default: TITLE,
+    /* Project pages supply their own name; this appends the brand. */
+    template: `%s | Prashant Phuyal`,
+  },
+  description: DESCRIPTION,
+  applicationName: profile.name,
   keywords: [
-    "AI Engineer",
-    "Generative AI",
-    "RAG",
-    "LLM",
+    "Prashant Phuyal",
+    "Er. Prashant Phuyal",
+    "AI Engineer Nepal",
+    "AI Engineer Kathmandu",
+    "Associate AI Engineer",
+    "Generative AI Engineer Nepal",
+    "Machine Learning Engineer Nepal",
+    "LLM Engineer",
+    "RAG developer",
+    "Retrieval-Augmented Generation",
+    "AI chatbot developer Nepal",
+    "Python",
     "FastAPI",
     "Qdrant",
+    "LangChain",
     "Computer Vision",
-    "Nepal",
-    "Kathmandu",
-    profile.name,
+    "Nepali OCR",
   ],
   authors: [{ name: profile.name, url: profile.siteUrl }],
-  alternates: { canonical: profile.siteUrl },
+  creator: profile.name,
+  publisher: profile.name,
+  alternates: { canonical: "/" },
   openGraph: {
-    type: "website",
+    type: "profile",
     url: profile.siteUrl,
-    title: `${profile.name} — ${profile.role}`,
-    description: profile.blurb,
+    siteName: profile.name,
+    title: TITLE,
+    description: DESCRIPTION,
     locale: "en_US",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Prashant Phuyal — Associate AI Engineer. Generative AI, RAG and LLM applications. Kathmandu, Nepal.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.role}`,
-    description: profile.blurb,
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/og.png"],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  category: "technology",
 };
 
 export const viewport: Viewport = {
@@ -89,25 +134,83 @@ const themeScript = `
 })();
 `;
 
-const personSchema = {
+/**
+ * One @graph rather than three loose blocks, so Person, WebSite and
+ * ProfilePage reference each other by @id and Google reads them as one
+ * entity instead of three unrelated claims.
+ *
+ * Every property below is verifiable from the visible page or the CV. No
+ * invented awards, ratings or affiliations.
+ */
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: profile.name,
-  jobTitle: profile.title,
-  description: profile.blurb,
-  email: `mailto:${profile.email}`,
-  url: profile.siteUrl,
-  sameAs: [profile.github, profile.linkedin],
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Kathmandu",
-    addressCountry: "NP",
-  },
-  worksFor: { "@type": "Organization", name: "Dome Infosys" },
-  alumniOf: {
-    "@type": "CollegeOrUniversity",
-    name: "Cosmos College of Management & Technology",
-  },
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${profile.siteUrl}/#person`,
+      name: profile.name,
+      alternateName: `${profile.honorific} ${profile.name}`,
+      jobTitle: profile.title,
+      description: profile.blurb,
+      email: `mailto:${profile.email}`,
+      telephone: profile.phones.map((phone) => phone.display),
+      url: `${profile.siteUrl}/`,
+      image: `${profile.siteUrl}/prashant.jpg`,
+      sameAs: [
+        profile.github,
+        profile.linkedin,
+        profile.instagram,
+        profile.facebook,
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Kathmandu",
+        addressCountry: "NP",
+      },
+      worksFor: {
+        "@type": "Organization",
+        name: experience.company,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Kathmandu",
+          addressCountry: "NP",
+        },
+      },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: education.school,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Kathmandu",
+          addressCountry: "NP",
+        },
+      },
+      /* Flattened from the same skill groups the page renders. */
+      knowsAbout: skills.flatMap((group) => group.items),
+      knowsLanguage: education.languages.map((language) => language.name),
+      nationality: { "@type": "Country", name: "Nepal" },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${profile.siteUrl}/#website`,
+      url: `${profile.siteUrl}/`,
+      name: profile.name,
+      description: DESCRIPTION,
+      inLanguage: "en",
+      publisher: { "@id": `${profile.siteUrl}/#person` },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${profile.siteUrl}/#webpage`,
+      url: `${profile.siteUrl}/`,
+      name: TITLE,
+      description: DESCRIPTION,
+      isPartOf: { "@id": `${profile.siteUrl}/#website` },
+      about: { "@id": `${profile.siteUrl}/#person` },
+      mainEntity: { "@id": `${profile.siteUrl}/#person` },
+      inLanguage: "en",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -134,7 +237,7 @@ export default function RootLayout({
         {children}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </body>
     </html>

@@ -56,7 +56,6 @@ export default function Hero({ photo }: { photo: string | null }) {
           <p className="label">
             {profile.location} — <LocalTime />
           </p>
-          <p className="label hidden md:block">{profile.title}</p>
           <p className="label flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
             {profile.available}
@@ -96,6 +95,17 @@ export default function Hero({ photo }: { photo: string | null }) {
                 <span>{profile.lastName}</span>
               </span>
             </span>
+          </span>
+
+          {/* Inside the H1 and visible, not hidden text: the heading should
+              state the role and the place, which is what people actually
+              search for. Reads as a subtitle under the name. */}
+          <span
+            style={delay(0.34)}
+            className="rise mt-4 block text-[0.95rem] font-medium leading-snug tracking-normal text-muted sm:text-[1.05rem]"
+          >
+            {profile.title} — Generative AI, RAG and LLM applications in{" "}
+            {profile.location}
           </span>
         </h1>
 

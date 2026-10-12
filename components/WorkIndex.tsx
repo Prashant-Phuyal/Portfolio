@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowUpRight, Minus, Plus } from "lucide-react";
 import Heading from "./Heading";
 import { Item, Reveal, Stagger } from "./Motion";
@@ -33,9 +34,11 @@ function Row({ project, index }: { project: Project; index: number }) {
 
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
-            <span className="font-display text-[1.6rem] font-medium leading-[0.98] tracking-[-0.035em] transition-transform duration-[520ms] ease-out group-hover:translate-x-2 sm:text-[2.1rem] lg:text-[2.6rem]">
+            {/* A heading, not a span: these are the most valuable terms on
+                the page and were previously absent from the outline. */}
+            <h3 className="font-display text-[1.6rem] font-medium leading-[0.98] tracking-[-0.035em] transition-transform duration-[520ms] ease-out group-hover:translate-x-2 sm:text-[2.1rem] lg:text-[2.6rem]">
               {project.name}
-            </span>
+            </h3>
             <span className="label hidden lg:inline">{project.sector}</span>
           </span>
           <span className="mt-2 block max-w-xl text-[0.86rem] leading-relaxed text-muted lg:text-[0.9rem]">
@@ -93,8 +96,16 @@ function Row({ project, index }: { project: Project; index: number }) {
                 ))}
               </div>
 
+              <Link
+                href={`/projects/${project.slug}/`}
+                className="ul-link mt-7 inline-flex items-center gap-1.5 text-[0.9rem] font-medium"
+              >
+                Read the full {project.name} write-up
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+
               {project.links && project.links.length > 0 && (
-                <div className="mt-7 flex flex-col items-start gap-2">
+                <div className="mt-5 flex flex-col items-start gap-2">
                   {project.links.map((link) => (
                     <a
                       key={link.href}
@@ -124,9 +135,9 @@ export default function WorkIndex() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-5 border-b border-line pb-4">
             <Heading text="Selected work" className="display" />
-            <p className="label">
-              {String(work.length).padStart(2, "0")} projects — 2025/26
-            </p>
+            <Link href="/projects/" className="ul-link label hover:!text-fg">
+              View all AI engineering projects
+            </Link>
           </div>
         </Reveal>
 

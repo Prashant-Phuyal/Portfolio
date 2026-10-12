@@ -54,10 +54,10 @@ export default function Heading({
   return (
     <Tag ref={ref} className={`words ${shown ? "in" : ""} ${className}`}>
       {words.map((word, index) => (
-        <span key={`${word}-${index}`}>
+        <span key={`${word}-${index}`} className="whitespace-pre">
           <span style={{ animationDelay: `${index * 70}ms` }}>
             {word}
-            {index < words.length - 1 ? " " : ""}
+            {index < words.length - 1 ? " " : ""}
           </span>
         </span>
       ))}
